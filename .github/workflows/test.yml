@@ -12,7 +12,7 @@ jobs:
       CI: true
       PUPPETEER_SKIP_DOWNLOAD: false
       TEST_ENV: true
-      GET_CONTENT_ENDPOINT: ${{ env.GET_CONTENT_ENDPOINT }}
+      GET_CONTENT_ENDPOINT: http://localhost:8080
 
     steps:
       - name: Check out
