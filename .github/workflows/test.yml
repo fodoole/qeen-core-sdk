@@ -24,7 +24,7 @@ jobs:
           node-version: "18"
 
       - name: Install dependencies
-        run: npm install --include=dev && npx puppeteer browsers install chrome
+        run: npm install --include=dev
 
       - name: Build
         run: npm run build
