@@ -11,7 +11,6 @@ jobs:
     env:
       CI: true
       PUPPETEER_SKIP_DOWNLOAD: false
-      GET_CONTENT_ENDPOINT: ${{ env.GET_CONTENT_ENDPOINT }}
       TEST_ENV: true
 
     steps:
@@ -27,6 +26,8 @@ jobs:
         run: npm install --include=dev
 
       - name: Build
+        env:
+          GET_CONTENT_ENDPOINT: ${{ env.GET_CONTENT_ENDPOINT }}
         run: npm run build
 
       - name: Start server
