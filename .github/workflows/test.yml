@@ -29,6 +29,13 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Build playground
+        run: |
+          cd test
+          npm install
+          npm run build
+          cd ..
+
       - name: Start server
         run: npm run start &
 
