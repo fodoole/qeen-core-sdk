@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { randInt, limit } from '../src/utils.ts';
-import { prepareSelectors } from '../src/sessionManager.ts';
+import { randInt, limit } from '../src/utils';
+import { prepareSelectors } from '../src/sessionManager';
 
 describe('Utilities', () => {
   it('(Random Integer) should generate a random integer between 10^15 and 10^16 - 1', async () => {
