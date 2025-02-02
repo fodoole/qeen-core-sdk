@@ -1,0 +1,36 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-22.04
+    env:
+      CI: true
+      PUPPETEER_SKIP_DOWNLOAD: false
+      GET_CONTENT_ENDPOINT: ${{ env.GET_CONTENT_ENDPOINT }}
+      TEST_ENV: true
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm install --include=dev
+
+      - name: Build
+        run: npm run build
+
+      - name: Start server
+        run: npm start &
+
+      - name: Run tests
+        run: npm test

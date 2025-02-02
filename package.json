@@ -4,7 +4,10 @@
   "description": "qeen Core SDK",
   "main": "qeen.ts",
   "scripts": {
-    "test": "npx jest test --watchAll=false --testTimeout=90000 --verbose --maxWorkers=1",
+    "test": "jest tests --verbose --testTimeout=90000 --maxWorkers=1 --testPathIgnorePatterns=e2e",
+    "test:start": "npm run start & npm run test",
+    "test:fast": "jest tests --verbose --testTimeout=90000 --maxWorkers=8 --testPathIgnorePatterns=e2e",
+    "test:e2e": "jest tests/e2e --verbose --testTimeout=90000 --maxWorkers=1",
     "start": "node index.js",
     "build": "tsc && npx babel build --out-dir build && webpack"
   },
