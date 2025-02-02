@@ -1,6 +1,6 @@
 /**
  * @file pageEvents.ts
- * @description The page events script for Qeen Analytics SDK.
+ * @description The page events script for qeen Core SDK.
  */
 
 import { Config, State } from './config';

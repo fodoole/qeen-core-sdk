@@ -1,6 +1,6 @@
 /**
  * @file sessionManager.ts
- * @description The session manager script for Qeen Analytics SDK.
+ * @description The session manager script for qeen Core SDK.
  */
 
 import { Config, State, getContentEndpoint } from './config';
@@ -143,7 +143,7 @@ export function prepareSelectors(rawContent: any[]): any {
 }
 
 /**
- * Function to fetch Qeen content.
+ * Function to fetch qeen content.
  * @param {string} qeenDeviceId - The user device ID.
  * @param {string | undefined} overrideFetchURL - The override fetch URL.
  * @returns {Promise<ContentResponse>} The promise object representing the response.
@@ -155,10 +155,10 @@ export function prepareSelectors(rawContent: any[]): any {
 export async function fetchContent(qeenDeviceId: string, overrideFetchURL: string | undefined): Promise<ContentResponse> {
   try {
     if (!qeenDeviceId) {
-      return Promise.reject(new InvalidParameterError('Qeen user device ID is required.'));
+      return Promise.reject(new InvalidParameterError('qeen user device ID is required.'));
     }
     if (window.location.hash.includes('no-qeen')) {
-      return Promise.reject(new URLContainsNoQeenError('Qeen is disabled; URL contains #no-qeen'));
+      return Promise.reject(new URLContainsNoQeenError('qeen is disabled; URL contains #no-qeen'));
     }
     resetContentServed();
 
@@ -175,7 +175,7 @@ export async function fetchContent(qeenDeviceId: string, overrideFetchURL: strin
     Config.contentSelectors = data.contentSelectors;
     return data;
   } catch (error) {
-    console.error('Failed to get Qeen content:', error);
+    console.error('Failed to get qeen content:', error);
     return Promise.reject(error);
   }
 }
@@ -207,8 +207,8 @@ export class BindQueueItem {
 }
 
 /**
- * Function that initializes the Qeen Analytics SDK.
- * @param {ContentResponse} config - The configuration object for the Qeen Analytics SDK.
+ * Function that initializes the qeen Core SDK.
+ * @param {ContentResponse} config - The configuration object for the qeen Core SDK.
  */
 export function initPageSession(config: ContentResponse): void {
   if (Config.noQeen) {
@@ -227,10 +227,12 @@ export function initPageSession(config: ContentResponse): void {
   State.pageUrl = window.location.href;
   State.requestUrl = config.requestUrl;
   Config.analyticsEndpoint = config.analyticsEndpoint || '';
-  Config.projectId = config.projectId || '0';
+  Config.projectId = config.projectId || '-';
+  Config.websiteId = config.websiteId || '-';
   Config.contentServingId = config.contentServingId || '0';
   Config.contentId = config.contentId || '-';
   Config.contentStatus = config.contentStatus || '';
+  Config.productId = config.productId || '-';
   Config.isPdp = config.isPdp || false;
   Config.idleTime = limit(config.idleTime, 60_000, 599_000) || 300_000;
 

@@ -1,7 +1,7 @@
 {
   "name": "qeen-analytics-sdk",
   "version": "1.0.0",
-  "description": "Qeen Analytics SDK",
+  "description": "qeen Core SDK",
   "main": "qeen.ts",
   "scripts": {
     "test": "npx jest test --watchAll=false --testTimeout=90000 --verbose --maxWorkers=1",
@@ -35,7 +35,7 @@
     "babel-jest": "^29.7.0",
     "dotenv": "^16.4.5",
     "dotenv-webpack": "^8.1.0",
-    "express": "^4.19.2",
+    "express": "^4.21.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "magic-string": "^0.30.11",
@@ -44,7 +44,10 @@
     "react-dom": "^18.3.1",
     "ts-jest": "^29.2.4",
     "uglify-js": "^3.19.1",
-    "webpack": "^5.93.0",
+    "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "typescript": "^5.7.2"
   }
 }

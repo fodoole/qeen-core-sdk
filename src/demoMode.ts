@@ -1,6 +1,6 @@
 /**
  * @file demoMode.ts
- * @description The demo mode script for Qeen Analytics SDK.
+ * @description The demo mode script for qeen Core SDK.
  * @description This script is used when running in demo mode via iframe.
  */
 

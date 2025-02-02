@@ -1,9 +1,9 @@
-# Qeen Analytics SDK Integration Guide for Single Page Applications
+# qeen Core SDK Integration Guide for Single Page Applications
 
-This guide will help you integrate the Qeen Analytics SDK into your single-page application (SPA). The SDK allows you to track page sessions, content interactions, and custom events in your SPA.
+This guide will help you integrate the qeen Core SDK into your single-page application (SPA). The SDK allows you to track page sessions, content interactions, and custom events in your SPA.
 
 ## Table of Contents
-- [Qeen Analytics SDK Integration Guide for Single Page Applications](#qeen-analytics-sdk-integration-guide-for-single-page-applications)
+- [qeen Core SDK Integration Guide for Single Page Applications](#qeen-core-sdk-integration-guide-for-single-page-applications)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Initialization](#initialization)
@@ -23,7 +23,7 @@ This guide will help you integrate the Qeen Analytics SDK into your single-page 
   - [Best Practices](#best-practices)
 
 ## Installation
-To install the Qeen Analytics SDK, add the following script tag to your HTML file:
+To install the qeen Core SDK, add the following script tag to your HTML file:
 ```html
 <script src="https://cdn.qeen.ai/sdk/qeen.js"></script>
 ```
@@ -249,6 +249,8 @@ The `qeen` namespace provides the following methods and properties:
      - `requestUrl: string` - The page URL on which the content fetch was made.
      - `analyticsEndpoint: string` - The endpoint for sending analytics data.
      - `projectId: string` - The project ID for the domain.
+     - `productId: string` - The product ID.
+     - `websiteId: string` - The website ID for the domain.
      - `contentId: string` - The ID of the optimized content.
      - `contentServingId: string` - The ID of the content serving.
      - `contentStatus: string` - The status of the content.
@@ -296,7 +298,7 @@ User device ID creation and storage is the responsibility of the application. Th
 A random 16-digit integer can be generated using the `randInt` method provided by the SDK.
 
 ## Definitions of a Product Detail Page
-Within the context of the Qeen Analytics SDK, a product detail page (PDP) is defined as a product page with content generation enabled. If your website serves content in multiple languages, only the products pages in languages with content generation enabled will be considered PDPs. The SDK will consider product pages in other languages as non-product detail pages.
+Within the context of the qeen Core SDK, a product detail page (PDP) is defined as a product page with content generation enabled. If your website serves content in multiple languages, only the products pages in languages with content generation enabled will be considered PDPs. The SDK will consider product pages in other languages as non-product detail pages.
 A product detail page is determined by the site URL pattern in the site configuration. If the current page URL matches the pattern, the SDK will consider it a product detail page and optimize content for it assuming the content fetch request is sent with a language that has content generation enabled.
 
 ## Rendering Content Guidelines
@@ -345,5 +347,5 @@ Instead of enabling general click and scroll tracking, you can now define specif
 7. Non-Product Detail Pages: The SDK will automatically detect non-product detail pages and not optimize content for them. You should still call the fetch method to get the domain configuration.
 8. Checkout Events: Checkout events are not debounced and can only be sent on non-product detail pages. Make sure to not directly bind checkout events to user interactions and instead only send them on confirmation or completion of a checkout process.
 
-By following these guidelines and best practices, you'll be able to effectively integrate the Qeen Analytics SDK into your single-page application, configure custom click and scroll events precisely, and gather valuable insights about user behavior and content performance.
+By following these guidelines and best practices, you'll be able to effectively integrate the qeen Core SDK into your single-page application, configure custom click and scroll events precisely, and gather valuable insights about user behavior and content performance.
 ___

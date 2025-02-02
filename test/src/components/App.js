@@ -29,9 +29,11 @@ function AnalyticsWrapper({ children }) {
       requestUrl: window.location.href,
       analyticsEndpoint: analyticsEndpoint,
       projectId: '123',
+      websiteId: '456',
       contentServingId: isPdp ? String(qeen.randInt()) : '0',
       contentId: isPdp ? 'optimised' : '-',
       contentStatus: '[SET_VIA_SERVER_TEMPLATE]',
+      productId: '[SET_VIA_SERVER_TEMPLATE]',
       isPdp: isPdp,
       idleTime: 60_000,
     });

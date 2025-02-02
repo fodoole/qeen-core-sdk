@@ -1,5 +1,5 @@
 /**
- * @fileoverview This is the main file for the Qeen script testing server.
+ * @fileoverview This is the main file for the qeen script testing server.
  */
 const express = require('express');
 const path = require('path');
@@ -25,7 +25,7 @@ function logRawBody(req, _, next) {
   });
 }
 
-// Serve built and bundled Qeen script
+// Serve built and bundled qeen script
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Serve React testing app

@@ -1,6 +1,6 @@
 /**
  * @file utils.ts
- * @description Utility functions for Qeen Analytics SDK.
+ * @description Utility functions for qeen Core SDK.
  */
 
 /**

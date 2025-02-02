@@ -1,6 +1,6 @@
 /**
  * @file qeen.ts
- * @description The main script for Qeen Analytics SDK.
+ * @description The main script for qeen Core SDK.
  */
 
 import { fetchContent, initPageSession, setContentServed, resetContentServed, sendContentServed } from './sessionManager';
@@ -20,7 +20,7 @@ declare global {
 
 /**
  * @namespace qeen
- * @description The main namespace for the Qeen Analytics SDK.
+ * @description The main namespace for the qeen Core SDK.
  */
 window.qeen = window.qeen || {};
 
@@ -43,7 +43,7 @@ window.qeen.URLContainsNoQeenError = URLContainsNoQeenError;
 
 if (window.location.hash.includes('no-qeen')) {
   Config.noQeen = true;
-  console.info(`${window.qeenError = 'Qeen is disabled; URL contains #no-qeen'}`);
+  console.info(`${window.qeenError = 'qeen is disabled; URL contains #no-qeen'}`);
   window.addEventListener('message', receiveMessage, false);
 } else {
   Config.noQeen = false;

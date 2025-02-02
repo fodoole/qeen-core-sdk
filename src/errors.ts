@@ -1,6 +1,6 @@
 /**
  * @file errors.ts
- * @description The error classes for Qeen Analytics SDK.
+ * @description The error classes for qeen Core SDK.
  */
 
 /**

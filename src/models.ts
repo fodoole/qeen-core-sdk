@@ -1,10 +1,11 @@
 /**
  * @file models.ts
- * @description The models for Qeen Analytics SDK.
+ * @description The models for qeen Core SDK.
  */
 
 import { Config, State } from './config';
 import { AnalyticsEndpointError, InvalidParameterError } from './errors';
+import { resetSession } from './sessionManager';
 
 /**
  * Class that handles page-level analytics.
@@ -23,9 +24,11 @@ export class PageAnalyticsEvent {
   public ua: string = navigator.userAgent;
   public r: string = document.referrer;
   public p: string = Config.projectId;
+  public wid: string = Config.websiteId;
   public csrvid: string = Config.contentServingId;
   public cid: string = Config.contentId;
   public cs: string = Config.contentStatus;
+  public prid: string = Config.productId;
   public uid: string = State.qeenDeviceId;
   public npdp: boolean = !Config.isPdp;
 
@@ -35,6 +38,11 @@ export class PageAnalyticsEvent {
   public edp: string | null;
 
   constructor(type: string, value: number | null, label: string | null, domPath: string | null) {
+    if (State.lastEventType === 'PAGE_EXIT') {
+      resetSession();
+      this.pid = State.sessionId;
+    }
+
     this.t = type;
     this.v = value;
     this.l = label;
@@ -49,14 +57,15 @@ export class PageAnalyticsEvent {
    */
   _pushEvent(): void {
     if (!Config.analyticsEndpoint) {
-      throw new AnalyticsEndpointError('Qeen analytics endpoint not set.');
+      throw new AnalyticsEndpointError('qeen analytics endpoint not set.');
     }
     if (!State.qeenDeviceId) {
-      throw new InvalidParameterError('Qeen user device ID is required.');
+      throw new InvalidParameterError('qeen user device ID is required.');
     }
     if (window.location.hash.includes('qeen-dev')) {
       console.info(this);
     }
+    State.lastEventType = this.t;
 
     const payloadObject = {
       event: this
@@ -69,13 +78,13 @@ export class PageAnalyticsEvent {
 /**
  * Class that handles the parameters for fetching content.
  * @class fetchContentParams
- * @param {string} qeenDeviceId - The Qeen device ID.
+ * @param {string} qeenDeviceId - The qeen device ID.
  * @property {string} pageUrl - The URL of the page.
  * @property {string} referrerUrl - The URL of the referrer.
  * @property {string} locale - The locale of the user.
  * @property {string} langCode - The language code of the page.
  * @property {string} timezone - The timezone of the user.
- * @property {string} userDeviceId - The Qeen device ID.
+ * @property {string} userDeviceId - The qeen device ID.
  * @property {URLSearchParams} params - The URL search parameters.
  * @method toString - Convert the parameters to a string.
  */
@@ -113,13 +122,15 @@ export class fetchContentParams {
 
 /**
  * @interface ContentResponse
- * @property {string} qeenDeviceId - The Qeen device ID.
+ * @property {string} qeenDeviceId - The qeen device ID.
  * @property {string} requestUrl - The request URL.
  * @property {string} analyticsEndpoint - The endpoint for the analytics server.
  * @property {string} projectId - The project ID.
+ * @property {string} websiteId - The website ID.
  * @property {string} contentServingId - The content serving ID.
  * @property {string} contentId - The content ID.
  * @property {string} contentStatus - The content status.
+ * @property {string} productId - The product ID.
  * @property {boolean} isPdp - The product detail page flag.
  * @property {number} idleTime - The idle time in milliseconds.
  * @property {any[]} rawContentSelectors - The raw content selectors.
@@ -130,10 +141,12 @@ export interface ContentResponse {
   requestUrl: string;
   analyticsEndpoint: string;
   projectId: string;
+  websiteId: string;
   idleTime: number;
   contentServingId: string;
   contentId: string;
   contentStatus: string;
+  productId: string;
   isPdp: boolean;
   rawContentSelectors: any[];
   contentSelectors: Object;

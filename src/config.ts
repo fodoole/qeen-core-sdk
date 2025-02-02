@@ -1,6 +1,6 @@
 /**
  * @file config.ts
- * @description The configuration objects for Qeen Analytics SDK.
+ * @description The configuration objects for qeen Core SDK.
  */
 
 import { InteractionEvent } from "./models";
@@ -13,12 +13,14 @@ import { BindQueueItem } from "./sessionManager";
 export const getContentEndpoint: string | undefined = process.env['GET_CONTENT_ENDPOINT'];
 /**
  * @class Config
- * @description The configuration class for Qeen Analytics SDK.
+ * @description The configuration class for qeen Core SDK.
  * @property {string} analyticsEndpoint - The endpoint for the analytics server.
  * @property {string} projectId - The project ID.
+ * @property {string} websiteId - The website ID.
  * @property {string} contentServingId - The content serving ID.
  * @property {string} contentId - The content ID.
  * @property {string} contentStatus - The content status.
+ * @property {string} productId - The product ID.
  * @property {boolean} isPdp - The product detail page flag.
  * @property {number} idleTime - The idle time in milliseconds.
  * @property {InteractionEvent[]} clickEvents - The click events array.
@@ -30,6 +32,8 @@ export const getContentEndpoint: string | undefined = process.env['GET_CONTENT_E
 export class Config {
   public static analyticsEndpoint: string;
   public static projectId: string;
+  public static productId: string;
+  public static websiteId: string;
   public static contentServingId: string;
   public static contentId: string;
   public static contentStatus: string;
@@ -44,8 +48,8 @@ export class Config {
 
 /**
  * @class State
- * @description The state class for Qeen Analytics SDK.
- * @property {string} qeenDeviceId - The Qeen device ID.
+ * @description The state class for qeen Core SDK.
+ * @property {string} qeenDeviceId - The qeen device ID.
  * @property {boolean} boundThreadEvents - The bound thread events flag.
  * @property {BindQueueItem[]} bindQueue - The bind queue.
  * @property {boolean} contentServed - The content served flag.
@@ -56,6 +60,7 @@ export class Config {
  * @property {number} idleTimer - The idle timer.
  * @property {number} lastIdleTime - The last idle time.
  * @property {number} lastTabExitTime - The last tab exit time.
+ * @property {string} lastEventType - The last event type.
  * @property {Set<InteractionEvent | any>} scrollObservedElements - The set of scroll observed elements.
  */
 export class State {
@@ -71,6 +76,7 @@ export class State {
   public static idleTimer: number;
   public static lastIdleTime: number;
   public static lastTabExitTime: number;
+  public static lastEventType: string = '';
   public static scrollObservedElements: Set<InteractionEvent | any>;
 
   /**
@@ -82,6 +88,7 @@ export class State {
     State.idleTimer = 0;
     State.lastIdleTime = Date.now();
     State.lastTabExitTime = 0;
+    State.lastEventType = '';
     State.scrollObservedElements = new Set();
   }
 }
