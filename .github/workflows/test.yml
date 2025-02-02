@@ -30,6 +30,8 @@ jobs:
         run: npm run build
 
       - name: Build playground
+        env:
+          CI: false
         run: |
           cd test
           npm install
