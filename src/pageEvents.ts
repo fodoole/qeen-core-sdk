@@ -135,6 +135,10 @@ function tabSwitchCausesReset(): boolean {
  */
 export function bindTabEvents(): void {
   document.addEventListener('visibilitychange', function (): void {
+    if (State.lastEventType === 'PAGE_EXIT') {
+      resetSession();
+      return;
+    }
     if (document.hidden) {
       State.lastTabExitTime = Date.now();
       new PageAnalyticsEvent('TAB_SWITCH', null, 'EXIT', null);
