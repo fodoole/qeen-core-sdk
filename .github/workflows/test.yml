@@ -11,7 +11,7 @@ jobs:
     env:
       CI: true
       PUPPETEER_SKIP_DOWNLOAD: false
-      GET_CONTENT_ENDPOINT: ${{ env.GET_CONTENT_ENDPOINT }}
+      GET_CONTENT_ENDPOINT: ${{ var.GET_CONTENT_ENDPOINT }}
       TEST_ENV: true
 
     steps:
