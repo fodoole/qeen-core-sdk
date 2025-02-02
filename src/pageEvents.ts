@@ -135,6 +135,7 @@ function tabSwitchCausesReset(): boolean {
  */
 export function bindTabEvents(): void {
   document.addEventListener('visibilitychange', function (): void {
+    // Prevent sessions from being revived by the browser's back/forward cache.
     if (State.lastEventType === 'PAGE_EXIT') {
       resetSession();
       return;
