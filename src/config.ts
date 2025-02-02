@@ -60,6 +60,7 @@ export class Config {
  * @property {number} idleTimer - The idle timer.
  * @property {number} lastIdleTime - The last idle time.
  * @property {number} lastTabExitTime - The last tab exit time.
+ * @property {string} lastEventType - The last event type.
  * @property {Set<InteractionEvent | any>} scrollObservedElements - The set of scroll observed elements.
  */
 export class State {
@@ -75,6 +76,7 @@ export class State {
   public static idleTimer: number;
   public static lastIdleTime: number;
   public static lastTabExitTime: number;
+  public static lastEventType: string = '';
   public static scrollObservedElements: Set<InteractionEvent | any>;
 
   /**
@@ -86,6 +88,7 @@ export class State {
     State.idleTimer = 0;
     State.lastIdleTime = Date.now();
     State.lastTabExitTime = 0;
+    State.lastEventType = '';
     State.scrollObservedElements = new Set();
   }
 }
