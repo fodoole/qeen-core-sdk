@@ -24,13 +24,13 @@ jobs:
           node-version: "18"
 
       - name: Install dependencies
-        run: npm install --include=dev
+        run: npm install --include=dev && npx puppeteer browsers install chrome
 
       - name: Build
         run: npm run build
 
       - name: Start server
-        run: npm start &
+        run: npm run start &
 
       - name: Run tests
-        run: npm test
+        run: npm run test
