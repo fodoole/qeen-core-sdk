@@ -236,6 +236,11 @@ export function initPageSession(config: ContentResponse): void {
   Config.isPdp = config.isPdp || false;
   Config.idleTime = limit(config.idleTime, 60_000, 599_000) || 300_000;
 
+  // Set the idle time to 10 seconds for testing purposes.
+  if (process.env['TEST_ENV']) {
+    Config.idleTime = 5_000;
+  }
+
   // Ensure interaction events don't leak through different pages
   Config.clickEvents = Config.clickEvents || [];
   Config.scrollEvents = Config.scrollEvents || [];

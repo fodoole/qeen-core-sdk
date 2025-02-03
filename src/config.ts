@@ -9,8 +9,8 @@ import { BindQueueItem } from "./sessionManager";
 /**
  * @constant {string} getContentEndpoint - The endpoint to fetch content.
  */
-// export const getContentEndpoint: string = '';
 export const getContentEndpoint: string | undefined = process.env['GET_CONTENT_ENDPOINT'];
+
 /**
  * @class Config
  * @description The configuration class for qeen Core SDK.
