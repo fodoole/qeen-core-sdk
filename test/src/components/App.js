@@ -41,7 +41,7 @@ function AnalyticsWrapper({ children }) {
     });
 
     qeen.bindClickEvents(new qeen.InteractionEvent('CLICK_LINK', '.nav'));
-  }, [location, isPdp]);
+  }, [location, isPdp, analyticsEndpoint]);
 
   return <>{children}</>;
 }
