@@ -5,7 +5,6 @@
 
 import { Config, State } from './config';
 import { AnalyticsEndpointError, InvalidParameterError } from './errors';
-import { resetSession } from './sessionManager';
 
 /**
  * Class that handles page-level analytics.
@@ -38,11 +37,6 @@ export class PageAnalyticsEvent {
   public edp: string | null;
 
   constructor(type: string, value: number | null, label: string | null, domPath: string | null) {
-    if (State.lastEventType === 'PAGE_EXIT') {
-      resetSession();
-      this.pid = State.sessionId;
-    }
-
     this.t = type;
     this.v = value;
     this.l = label;
