@@ -12,7 +12,7 @@ jobs:
       CI: true
       PUPPETEER_SKIP_DOWNLOAD: false
       TEST_ENV: true
-      GET_CONTENT_ENDPOINT: http://localhost:8080
+      GET_CONTENT_ENDPOINT: "http://localhost:8080"
 
     steps:
       - name: Check out
@@ -35,9 +35,6 @@ jobs:
           npm install
           npm run build
           cd ..
-
-      - name: Start server
-        run: npm run start &
 
       - name: Run tests
         run: npm run test
