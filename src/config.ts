@@ -9,8 +9,8 @@ import { BindQueueItem } from "./sessionManager";
 /**
  * @constant {string} getContentEndpoint - The endpoint to fetch content.
  */
-// export const getContentEndpoint: string = '';
 export const getContentEndpoint: string | undefined = process.env['GET_CONTENT_ENDPOINT'];
+
 /**
  * @class Config
  * @description The configuration class for qeen Core SDK.
@@ -56,10 +56,12 @@ export class Config {
  * @property {string} pageUrl - The page URL.
  * @property {string} requestUrl - The request URL.
  * @property {boolean} contentServedSent - The content served sent flag.
+ * @property {boolean} pageViewSent - The page viewed flag.
  * @property {string} sessionId - The session ID.
  * @property {number} idleTimer - The idle timer.
  * @property {number} lastIdleTime - The last idle time.
  * @property {number} lastTabExitTime - The last tab exit time.
+ * @property {string} lastEventType - The last event type.
  * @property {Set<InteractionEvent | any>} scrollObservedElements - The set of scroll observed elements.
  */
 export class State {
@@ -71,10 +73,12 @@ export class State {
   public static requestUrl: string;
   
   public static contentServedSent: boolean = false;
+  public static pageViewSent: boolean = false;
   public static sessionId: string;
   public static idleTimer: number;
   public static lastIdleTime: number;
   public static lastTabExitTime: number;
+  public static lastEventType: string = '';
   public static scrollObservedElements: Set<InteractionEvent | any>;
 
   /**
@@ -82,10 +86,12 @@ export class State {
    */
   static reset(): void {
     State.contentServedSent = false;
+    State.pageViewSent = false;
     State.sessionId = '';
     State.idleTimer = 0;
     State.lastIdleTime = Date.now();
     State.lastTabExitTime = 0;
+    State.lastEventType = '';
     State.scrollObservedElements = new Set();
   }
 }

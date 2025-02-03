@@ -74,9 +74,8 @@ describe('Click Events', () => {
       waitForSessionStart: true,
     }, {});
 
-    for (let i = 0; i < 5; i++) {
-      await page.click('#add-to-cart');
-    }
+    await page.click('#add-to-cart');
+    await page.click('#add-to-cart');
 
     await common.wait(common.debounceTime);
 

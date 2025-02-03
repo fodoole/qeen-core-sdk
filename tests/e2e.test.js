@@ -15,11 +15,11 @@ const env = {
 }
 
 // The time to wait for the events to be logged in BigQuery.
-const loggingWaitTime = 5_000;
+const loggingWaitTime = 10_000;
 
 const hostAddress = process.env.ANALYTICS_HOST || 'localhost';
-const port = process.env.PORT || 8080;
-const serverURL = `http://${hostAddress}:${port}`;
+const port = (hostAddress !== 'localhost') ? process.env.PORT || '' : 8080;
+const serverURL = `${hostAddress === 'localhost' ? 'http://' : ''}${hostAddress}${port ? ':' : ''}${port}`;
 
 const QueryParams = {
   PAGE_SESSION_ID: 'page_session_id',

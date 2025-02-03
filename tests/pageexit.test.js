@@ -54,6 +54,9 @@ describe('Page Exit', () => {
 
     await page.click('h3.productTitle');
 
+    // Wait for the page to navigate
+    await common.wait(1_000);
+
     const events = common.reduceToEventsArray(payloads);
     const pageViewEvent = events.find(event => event.t === 'PAGE_VIEW');
     const pageExitEvent = events.find(event => event.t === 'PAGE_EXIT');

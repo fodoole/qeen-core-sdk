@@ -59,6 +59,7 @@ export class PageAnalyticsEvent {
     if (window.location.hash.includes('qeen-dev')) {
       console.info(this);
     }
+    State.lastEventType = this.t;
 
     const payloadObject = {
       event: this
