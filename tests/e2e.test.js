@@ -117,7 +117,9 @@ async function processPageLevelAnalyticsTest(payloads, sessionIds, startTime, ta
       pid: row.page_session_id,
       csrvid: row.content_serving_id,
       cid: row.content_id,
-      uid: row.user_device_id
+      uid: row.user_device_id,
+      prid: row.product_id,
+      wid: row.website_id
     };
   });
 

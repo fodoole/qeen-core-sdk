@@ -49,6 +49,8 @@ jobs:
       - name: Build playground
         run: |
           cd test
+          cat .env
+          echo "REACT_APP_ANALYTICS_HOST=$ANALYTICS_HOST" >> .env
           npm install
           npm run build
           cd ..
