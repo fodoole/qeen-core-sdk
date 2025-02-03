@@ -52,7 +52,10 @@ function initResetCommon(label: string): void {
 
   // Log the page view and content served events
   function logPageView(): void {
-    new PageAnalyticsEvent('PAGE_VIEW', null, label, null);
+    if (!State.pageViewSent) {
+      new PageAnalyticsEvent('PAGE_VIEW', null, label, null);
+      State.pageViewSent = true;
+    }
     sendContentServed();
   }
 
