@@ -1,7 +1,6 @@
 # qeen Core SDK Integration Guide for Single Page Applications
 
 ![Test Status](https://github.com/fodoole/qeen-core-sdk/actions/workflows/test.yml/badge.svg)
-![E2E Test Status](https://github.com/fodoole/qeen-core-sdk/actions/workflows/test-e2e.yml/badge.svg)
 
 This guide will help you integrate the qeen Core SDK into your single-page application (SPA). The SDK allows you to track page sessions, content interactions, and custom events in your SPA.
 
