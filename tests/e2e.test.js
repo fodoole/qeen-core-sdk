@@ -12,6 +12,7 @@ const env = {
   BQ_DATASET: process.env.BQ_DATASET,
   BQ_EVENTS_TABLE: process.env.BQ_EVENTS_TABLE,
   BQ_EVENTS_TABLE_NPDP: process.env.BQ_EVENTS_TABLE_NPDP,
+  BQ_REGION: process.env.BQ_REGION
 }
 
 // The time to wait for the events to be logged in BigQuery.
@@ -44,7 +45,7 @@ async function executeQuery(paramName, paramValue, table, timestampName, timesta
 
   const options = {
     query: query,
-    location: 'EU',
+    location: env.BQ_REGION,
   };
 
   const [rows] = await bigqueryClient.query(options);
@@ -117,7 +118,10 @@ async function processPageLevelAnalyticsTest(payloads, sessionIds, startTime, ta
       pid: row.page_session_id,
       csrvid: row.content_serving_id,
       cid: row.content_id,
-      uid: row.user_device_id
+      cs: row.content_status,
+      uid: row.user_device_id,
+      prid: row.product_id,
+      wid: row.website_id
     };
   });
 
@@ -127,6 +131,9 @@ async function processPageLevelAnalyticsTest(payloads, sessionIds, startTime, ta
   // Delete the properties not stored in BigQuery
   eventsMatching = eventsMatching.map(event => { delete event['endpoint']; return event; });
   eventsMatching = eventsMatching.map(event => { delete event['npdp']; return event; });
+  if (table === env.BQ_EVENTS_TABLE_NPDP) {
+    eventsMatching = eventsMatching.map(event => { delete event['prid']; return event; });
+  }
 
   eventsMatching = common.sortObjects(eventsMatching, ['t', 'l']);
   rowsMutated = common.sortObjects(rowsMutated, ['t', 'l']);

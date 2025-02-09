@@ -1,14 +1,14 @@
 module.exports = {
   projects: [
     {
-      displayName: 'js-tests',
+      displayName: 'behaviour-tests',
       preset: 'jest-puppeteer',
       testMatch: ['**/?(*.)+(test).js?(x)'],
       moduleDirectories: ['node_modules', 'frontend-serving'],
       moduleFileExtensions: ['js', 'json', 'jsx', 'node'],
     },
     {
-      displayName: 'ts-tests',
+      displayName: 'unit-tests',
       transform: {
         '^.+\\.tsx?$': 'ts-jest',
         '^.+\\.jsx?$': 'babel-jest',
