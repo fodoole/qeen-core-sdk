@@ -8,10 +8,12 @@ afterEach(async () => {
 });
 
 const env = {
+  GOOGLE_APPLICATION_CREDENTIALS: process.env.GOOGLE_APPLICATION_CREDENTIALS,
   PROJECT_ID: process.env.PROJECT_ID,
   BQ_DATASET: process.env.BQ_DATASET,
   BQ_EVENTS_TABLE: process.env.BQ_EVENTS_TABLE,
   BQ_EVENTS_TABLE_NPDP: process.env.BQ_EVENTS_TABLE_NPDP,
+  BQ_REGION: process.env.BQ_REGION,
 }
 
 // The time to wait for the events to be logged in BigQuery.
@@ -20,6 +22,14 @@ const loggingWaitTime = 10_000;
 const hostAddress = process.env.ANALYTICS_HOST || 'localhost';
 const port = (hostAddress !== 'localhost') ? process.env.PORT || '' : 8080;
 const serverURL = `${hostAddress === 'localhost' ? 'http://' : ''}${hostAddress}${port ? ':' : ''}${port}`;
+
+if (Object.entries(env).some(([_, value]) => value === undefined)) {
+  const missingVars = Object.entries(env)
+    .filter(([_, value]) => value === undefined)
+    .map(([key]) => key)
+    .join(', ');
+  throw new Error(`Please provide the necessary environment variables: ${missingVars}`);
+}
 
 const QueryParams = {
   PAGE_SESSION_ID: 'page_session_id',
@@ -44,7 +54,7 @@ async function executeQuery(paramName, paramValue, table, timestampName, timesta
 
   const options = {
     query: query,
-    location: 'EU',
+    location: env.BQ_REGION,
   };
 
   const [rows] = await bigqueryClient.query(options);
@@ -117,7 +127,10 @@ async function processPageLevelAnalyticsTest(payloads, sessionIds, startTime, ta
       pid: row.page_session_id,
       csrvid: row.content_serving_id,
       cid: row.content_id,
-      uid: row.user_device_id
+      cs: row.content_status,
+      uid: row.user_device_id,
+      prid: row.product_id,
+      wid: row.website_id
     };
   });
 
@@ -127,6 +140,9 @@ async function processPageLevelAnalyticsTest(payloads, sessionIds, startTime, ta
   // Delete the properties not stored in BigQuery
   eventsMatching = eventsMatching.map(event => { delete event['endpoint']; return event; });
   eventsMatching = eventsMatching.map(event => { delete event['npdp']; return event; });
+  if (table === env.BQ_EVENTS_TABLE_NPDP) {
+    eventsMatching = eventsMatching.map(event => { delete event['prid']; return event; });
+  }
 
   eventsMatching = common.sortObjects(eventsMatching, ['t', 'l']);
   rowsMutated = common.sortObjects(rowsMutated, ['t', 'l']);
@@ -136,10 +152,6 @@ async function processPageLevelAnalyticsTest(payloads, sessionIds, startTime, ta
 
 // E2E Test
 describe('E2E/Integration', () => {
-  if (Object.values(env).some(prop => prop === undefined)) {
-    throw new Error('Please provide the necessary environment variables.');
-  }
-
   it('(Page-Level Analytics) send page-level analytics events via the browser and observe these events in the database', async () => {
     const startTime = Date.now();
     const loggingURL = serverURL + common.endpoints.pageLevelAnalytics;
@@ -237,7 +249,7 @@ describe('E2E/Integration', () => {
     await common.wait(1_000);
 
     // Process the page-level analytics test
-    const { eventsMatching, rowsMutated  } = await processPageLevelAnalyticsTest(payloads, [sessionId1, sessionId2, sessionId3], startTime, env.BQ_EVENTS_TABLE_NPDP);
+    const { eventsMatching, rowsMutated } = await processPageLevelAnalyticsTest(payloads, [sessionId1, sessionId2, sessionId3], startTime, env.BQ_EVENTS_TABLE_NPDP);
     expect(rowsMutated).toEqual(eventsMatching);
   });
 });

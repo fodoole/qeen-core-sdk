@@ -13,7 +13,9 @@ import '../styles/App.css';
 function AnalyticsWrapper({ children }) {
   const location = useLocation();
   const isPdp = location.pathname.includes('/product/');
-  const analyticsEndpoint = 'http://localhost:8080/log';
+  const hostAddress = process.env.REACT_APP_ANALYTICS_HOST || 'localhost';
+  const port = (hostAddress !== 'localhost') ? process.env.REACT_APP_PORT || '' : 8080;
+  const analyticsEndpoint = `${hostAddress === 'localhost' ? 'http://' : ''}${hostAddress}${port ? ':' : ''}${port}/log`;
 
   useEffect(() => {
     // qeen.fetchQeenContent('dev');
@@ -23,7 +25,7 @@ function AnalyticsWrapper({ children }) {
     } else {
       qeen.resetContentServed();
     }
-  
+
     qeen.initPageSession({
       qeenDeviceId: 'dev',
       requestUrl: window.location.href,
@@ -39,7 +41,7 @@ function AnalyticsWrapper({ children }) {
     });
 
     qeen.bindClickEvents(new qeen.InteractionEvent('CLICK_LINK', '.nav'));
-  }, [location, isPdp]);
+  }, [location, isPdp, analyticsEndpoint]);
 
   return <>{children}</>;
 }
